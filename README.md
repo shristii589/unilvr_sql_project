@@ -36,7 +36,7 @@ The Unilever database is composed of the following tables:
 
 ### Q1. Find the top performing customer in terms of quantity sold in fiscal year 2021.
 
-...sql
+---sql
 SELECT 
     c.customer, SUM(s.sold_quantity) AS total_qty_sold
 FROM
@@ -48,6 +48,6 @@ WHERE
 GROUP BY c.customer
 ORDER BY total_qty_sold DESC
 LIMIT 1;
-...
+---
 
 
