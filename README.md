@@ -35,7 +35,7 @@ The Unilever database is composed of the following tables:
 
 ## Business problems and solutions
 
-### Q1. Find the top performing customer in terms of quantity sold in fiscal year 2021.
+### 1. Find the top performing customer in terms of quantity sold in fiscal year 2021.
 
 ```sql
 SELECT 
@@ -52,7 +52,7 @@ LIMIT 1;
 ```
 **Objective-** To understand which customers drive the highest volume of product distribution, enabling company to strengthen partnerships and prioritizing customer relationships that significantly impact sales performance.
 
-### Q2. Create a function to get the fiscal year's quarter.
+### 2. Create a function to get the fiscal year's quarter.
 
 ```sql
 CREATE DEFINER=`root`@`localhost` FUNCTION `fiscal_year_qtr` (date date) 
@@ -74,7 +74,7 @@ DETERMINISTIC
 ```
 **Objective-** To categorize financial data according to company's specific fiscal calender so that the analysis can align with the fiscal year, enabling better financial reporting, performance evaluation and strategic planning based on quarterly results.
 
-### Q3.  Generate gross sales report for Globalmart ltd , India for fiscal year 2021.
+### 3.  Generate gross sales report for Globalmart ltd , India for fiscal year 2021.
 
 **Step 1** - To get customer code for Globalmart ltd. , India
 
@@ -119,7 +119,7 @@ LIMIT 15000000;
 ```
 **Objective-** Provide insight into the gross sales performance so that company can make decisions about discount strategies based on the performance.
 
-### Q4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal year.
+### 4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal year.
 
 ```sql
 CREATE DEFINER=`root`@`localhost` PROCEDURE `gross_sales_report`(
@@ -144,7 +144,7 @@ END;
 ```
 **Objective-** To evaluate gross sales performance of a specific customer in a specific market for a specific fiscal year to make informed decisions like discount strategies, customer engagement to enhance future performance.
 
-### Q5. Analyze monthly sales trends for product lakme sun expert spf50+.
+### 5. Analyze monthly sales trends for product lakme sun expert spf50+.
 Step 1 - To get the product code for "lakme sun expert spf 50
 
 ```sql
@@ -169,7 +169,7 @@ ORDER BY s.date;
 ```
 **Objective-** For tracking sales performance on a monthly basis, which helps to identify patterns and seasonal variations in demand which will further help in making informed decisions regarding inventory management and sales forecasting.
 
-### Q6. Find are the products having higher than average sales for fiscal year 2021 ?
+### 6. Find are the products having higher than average sales for fiscal year 2021 ?
 
 ```sql
 SELECT p.product, SUM(s.sold_quantity) AS total_quantity_sold
@@ -189,7 +189,7 @@ HAVING SUM(s.sold_quantity) > (
 ```
 **Objective-** To identify products with sales performance exceeding the average for fiscal year 2021 so that company can gain insights into successful products that resonate with customers.
 
-## Q7. Create a report to show gross sales performance over region for quarter 2 of fiscal year 2020.
+## 7. Create a report to show gross sales performance over region for quarter 2 of fiscal year 2020.
 
 ```sql
 SELECT 
@@ -209,7 +209,7 @@ GROUP BY c.region;
 ```
 **Objective-** To highlight regional performance differences and assess the effectiveness of regional sales strategies which will help in making further important decisions.
 
-### Q8. Create a report showcasing the percent share of customer over gross sales for fiscal year 2020.
+### 8. Create a report showcasing the percent share of customer over gross sales for fiscal year 2020.
 
 ```sql
 with cte1 as (
@@ -231,7 +231,7 @@ order by gross_sales_mln desc;
 
 **Objective-** To identify key customers and assess their gross sales performance, by understanding distribution of gross sales among customers, company can recognize high value customers and tailoring marketing strategies to enhance customer engagement.
 
-### Q9. Create a report of top 3 products in each division by their sales quantity for fiscal year 2021.
+### 9. Create a report of top 3 products in each division by their sales quantity for fiscal year 2021.
 
 ```sql
 with cte1 as (
@@ -249,7 +249,7 @@ select * from cte2 where drank<=3;
 ```
 **Objective-** To provide insights into product performance across different divisions, enabling company to identify which products are driving sales in each category and supporting strategic decision-making for product development and pricing strategies.
 
-### Q10. Create a report of top 5 products by net sales for fiscal year 2021 with the help of views
+### 10. Create a report of top 5 products by net sales for fiscal year 2021 with the help of views
 
 **Step 1** - Create a view named sales_pre using query mentioned below 
 
