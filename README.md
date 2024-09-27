@@ -5,13 +5,13 @@ This project focuses on analyzing the Unilever database, which consists of multi
 ## Objectives
 The primary objectives of this project are:
 
-1.To analyze customer purchasing patterns and identify key segments.
+1. To analyze customer purchasing patterns and identify key segments.
 
-2.To evaluate product performance across different regions and categories.
+2. To evaluate product performance across different regions and categories.
 
-3.To assess the impact of pricing strategies, including discounts, on overall sales.
+3. To assess the impact of pricing strategies, including discounts, on overall sales.
 
-4.To generate insights that can support decision-making for marketing and sales strategies.
+4. To generate insights that can support decision-making for marketing and sales strategies.
 ## Disclaimer
 This project uses a "fictional dataset" based on the structure of Unilever. The data is completely synthetic and used solely for educational purposes. None of the information represents real company data or business operations.
 
