@@ -4,6 +4,7 @@
 This project focuses on analyzing the Unilever database, which consists of multiple tables designed to capture various aspects of customer and product interactions. The objective is to gain insights into sales performance, customer behavior, and pricing strategies through structured query language (SQL) analysis.
 ## Objectives
 The primary objectives of this project are:
+
 1.To analyze customer purchasing patterns and identify key segments.
 
 2.To evaluate product performance across different regions and categories.
