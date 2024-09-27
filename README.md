@@ -50,4 +50,247 @@ ORDER BY total_qty_sold DESC
 LIMIT 1;
 ```
 
+### Q2. Create a function to get the fiscal year's quarter.
 
+```sql
+CREATE DEFINER=`root`@`localhost` FUNCTION `fiscal_year_qtr` (date date) 
+RETURNS char(2) CHARSET utf8mb4
+DETERMINISTIC
+ BEGIN
+       declare m tinyint;
+       declare qtr char(5);
+	   set m = month(date);
+       case 
+          when m in (9,10,11) then set qtr = "Q1";
+          when m in (12,1,2) then set qtr = "Q2";
+          when m in (3,4,5) then set qtr = "Q3";
+          else set qtr = "Q4";
+          end case;
+
+ RETURN qtr;
+ END;
+```
+
+### Q3.  Generate gross_sales report for globalmart ltd , India for fiscal_year 2021.
+
+```sql
+SELECT 
+    s.date,
+    s.fiscal_year,
+    s.customer_code,
+    s.product_code,
+    c.customer,
+    c.market,
+    p.product,
+    s.sold_quantity,
+    g.gross_price,
+    g.gross_price * s.sold_quantity AS gross_sales
+FROM
+    fact_sales s
+        JOIN
+    dim_customer c ON s.customer_code = c.customer_code
+        JOIN
+    dim_product p ON s.product_code = p.product_code
+        JOIN
+    fact_gross_price g ON s.product_code = g.product_code
+        AND s.fiscal_year = g.fiscal_year
+WHERE
+    s.fiscal_year = 2021
+        AND s.customer_code IN (70002017 , 90002011)
+LIMIT 15000000;
+```
+
+### Q4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal_year.
+
+```sql
+CREATE DEFINER=`root`@`localhost` PROCEDURE `gross_sales_report`(
+in in_customer_code text,
+ in in_fiscal_year int)
+BEGIN
+select
+ s.date,s.fiscal_year,s.customer_code,s.product_code,
+c.customer,c.market,p.product,s.sold_quantity,g.gross_price,
+g.gross_price*s.sold_quantity as gross_sales 
+from fact_sales s
+join dim_customer c
+on s.customer_code = c.customer_code
+join dim_product p
+on s.product_code = p.product_code
+join fact_gross_price g
+on s.product_code = g.product_code and s.fiscal_year=g.fiscal_year
+where find_in_set(s.customer_code,in_customer_code)>0
+and s.fiscal_year = in_fiscal_year
+  limit 15000000;
+END;
+```
+
+### Q5. Analyze monthly sales trends for product lakme sun expert spf50+.
+To get the product code for "lakme sun expert spf 50
+```sql
+select *
+from dim_product
+where product="lakme sun expert spf50+"
+```
+
+To get the monthly sales for the product lakme sun expert spf50+
+```sql
+SELECT 
+    s.date, SUM(s.sold_quantity) AS total_sales
+FROM
+    fact_sales s
+        JOIN
+    dim_customer c
+WHERE
+    product_code = 'A3920150303'
+GROUP BY s.date
+ORDER BY s.date;
+```
+
+### Q6. Find are the products having higher than average sales for fiscal_year 2021 ?
+
+```sql
+SELECT p.product, SUM(s.sold_quantity) AS total_quantity_sold
+FROM fact_sales s
+JOIN dim_product p ON s.product_code = p.product_code
+WHERE s.fiscal_year = 2021
+GROUP BY p.product
+HAVING SUM(s.sold_quantity) > (
+    SELECT AVG(total_sales)
+    FROM (
+        SELECT SUM(fs.sold_quantity) AS total_sales
+        FROM fact_sales fs
+        WHERE fs.fiscal_year = 2021
+        GROUP BY fs.product_code
+    ) AS avg_sales
+);
+```
+
+## Q7. Create a report to show gross sales performance over region for quarter 2 of fiscal year 2020.
+
+```sql
+SELECT 
+    c.region,
+    SUM(s.sold_quantity * g.gross_price) / 1000000 AS gross_sales_mln
+FROM
+    fact_sales s
+        JOIN
+    dim_customer c ON s.customer_code = c.customer_code
+        JOIN
+    fact_gross_price g ON s.product_code = g.product_code
+        AND s.fiscal_year = g.fiscal_year
+WHERE
+    FISCAL_YEAR_QTR(s.date) = 'Q2'
+        AND s.fiscal_year = 2020
+GROUP BY c.region;
+```
+
+### Q8. Create a report showcasing the percent share of customer over gross sales for fiscal year 2020.
+
+```sql
+with cte1 as (
+select c.customer,
+       sum(s.sold_quantity*g.gross_price)/1000000 as gross_sales_mln
+from fact_sales s
+join dim_customer c
+on s.customer_code = c.customer_code
+join fact_gross_price g
+on s.product_code = g.product_code and
+   s.fiscal_year = g.fiscal_year
+where s.fiscal_year = 2021
+group by c.customer)
+select *,
+        gross_sales_mln*100/sum(gross_sales_mln) over () as pct
+from cte1
+order by gross_sales_mln desc;
+```
+
+### Q9. Create a report of top 3 products in each division by their sales quantity for fiscal year 2021.
+
+```sql
+with cte1 as (
+select p.division,p.product,sum(sold_quantity) as total_qty
+from fact_sales s
+join dim_product p 
+on s.product_code = p.product_code
+where s.fiscal_year = 2021 
+group by p.division,p.product),
+cte2 as (
+select *,
+ dense_rank () over (partition by division order by total_qty desc)
+ as drank from cte1 )
+select * from cte2 where drank<=3;
+```
+
+### Q10. Create a report of top 5 products by net sales for fiscal_year 2021 with the help of views
+
+```sql
+select s.date,
+s.fiscal_year,
+s.customer_code,
+s.product_code,
+c.customer,
+c.market,
+p.product,
+s.sold_quantity,
+g.gross_price as gross_price_per_item,
+g.gross_price*s.sold_quantity as gross_sales,
+pre.pre_invoice_discount_pct
+from fact_sales s
+join dim_customer c
+on s.customer_code = c.customer_code
+join dim_product p
+on s.product_code = p.product_code
+join fact_gross_price g
+on s.product_code = g.product_code and s.fiscal_year = g.fiscal_year
+join fact_pre_invoice_deductions pre
+on s.customer_code = pre.customer_code and s.fiscal_year = pre.fiscal_year
+limit 1500000;
+```
+Create a view named sales_pre through above query for further analysis
+
+```sql
+SELECT 
+    s.date,
+    s.fiscal_year,
+    s.customer_code,
+    s.product_code,
+    s.customer,
+    s.market,
+    s.product,
+    s.sold_quantity,
+    s.gross_price_per_item,
+    s.gross_sales,
+    s.pre_invoice_discount_pct,
+    s.gross_sales - s.gross_sales * s.pre_invoice_discount_pct AS net_invoice_sales,
+    po.discounts_pct + po.other_deductions_pct AS total_post_disc
+FROM
+    sales_pre s
+        JOIN
+    fact_post_invoice_deductions po ON s.customer_code = po.customer_code
+        AND s.product_code = po.product_code
+        AND s.date = po.date;
+  ```
+
+Create a view with above query named netinvsales2 using the query mentioned above
+
+```sql
+SELECT 
+    *,
+    net_invoice_sales - net_invoice_sales * total_post_disc AS net_sales
+FROM
+    netinvsales2;
+```
+
+Create a view named net_sales2 using  query mentioned above.
+
+```sql
+SELECT 
+    product, SUM(net_sales) AS _netsales
+FROM
+    net_sales2
+WHERE
+    fiscal_year = 2021
+GROUP BY product
+ORDER BY _netsales DESC
+LIMIT 5;
+```
