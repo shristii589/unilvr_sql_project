@@ -50,6 +50,7 @@ GROUP BY c.customer
 ORDER BY total_qty_sold DESC
 LIMIT 1;
 ```
+Objective - To understand which customers drive the highest volume of product distribution, enabling company to strengthen partnerships and prioritizing customer relationships that significantly impact sales performance.
 
 ### Q2. Create a function to get the fiscal year's quarter.
 
