@@ -1,2 +1,0 @@
-gdb0041_fact_sales.sql filter=lfs diff=lfs merge=lfs -text
-gdb0041_fact_post_invoice_deductions.sql filter=lfs diff=lfs merge=lfs -text
