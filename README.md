@@ -74,7 +74,22 @@ DETERMINISTIC
 ```
 **Objective-** To categorize financial data according to company's specific fiscal calender so that the analysis can align with the fiscal year, enabling better financial reporting, performance evaluation and strategic planning based on quarterly results.
 
-### Q3.  Generate gross sales report for globalmart ltd , India for fiscal year 2021.
+### Q3.  Generate gross sales report for Globalmart ltd , India for fiscal year 2021.
+
+**Step 1** - To get customer code for Globalmart ltd. , India
+
+```sql
+SELECT 
+    customer_code
+FROM
+    dim_customer
+WHERE
+    customer LIKE '%globalmart ltd%'
+        AND market = 'India'
+```
+
+**Step 2** - Generate gross sales report
+
 
 ```sql
 SELECT 
@@ -236,7 +251,7 @@ select * from cte2 where drank<=3;
 
 ### Q10. Create a report of top 5 products by net sales for fiscal year 2021 with the help of views
 
-Step 1 - Create a view named sales_pre using query mentioned below 
+**Step 1** - Create a view named sales_pre using query mentioned below 
 
 ```sql
 select s.date,
@@ -261,7 +276,7 @@ join fact_pre_invoice_deductions pre
 on s.customer_code = pre.customer_code and s.fiscal_year = pre.fiscal_year
 limit 1500000;
 ```
-Step 2 - Create a view named netinvsales2 using  query mentioned below
+**Step 2** - Create a view named netinvsales2 using  query mentioned below
 
 ```sql
 SELECT 
@@ -286,7 +301,7 @@ FROM
         AND s.date = po.date;
   ```
 
-Step 3 - Create a view named net_sales2 using  query mentioned below 
+**Step 3** - Create a view named net_sales2 using  query mentioned below 
 
 ```sql
 SELECT 
@@ -296,7 +311,7 @@ FROM
     netinvsales2;
 ```
 
-Step 4 - Get top 5 products by net_sales for fiscal year 2021
+**Step 4** - Get top 5 products by net_sales for fiscal year 2021
 
 ```sql
 SELECT 
