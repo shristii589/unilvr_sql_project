@@ -298,3 +298,8 @@ GROUP BY product
 ORDER BY _netsales DESC
 LIMIT 5;
 ```
+
+
+## Conclusion
+
+This project aims to provide a comprehensive analysis of the Unilever database, uncovering valuable insights that can enhance business strategies and drive growth. By leveraging SQL for data analysis, the project will contribute to a better understanding of customer and product dynamics within the Unilever brand.
