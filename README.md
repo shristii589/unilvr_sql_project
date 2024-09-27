@@ -71,7 +71,7 @@ DETERMINISTIC
  END;
 ```
 
-### Q3.  Generate gross_sales report for globalmart ltd , India for fiscal_year 2021.
+### Q3.  Generate gross sales report for globalmart ltd , India for fiscal year 2021.
 
 ```sql
 SELECT 
@@ -100,7 +100,7 @@ WHERE
 LIMIT 15000000;
 ```
 
-### Q4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal_year.
+### Q4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal year.
 
 ```sql
 CREATE DEFINER=`root`@`localhost` PROCEDURE `gross_sales_report`(
@@ -125,14 +125,16 @@ END;
 ```
 
 ### Q5. Analyze monthly sales trends for product lakme sun expert spf50+.
-To get the product code for "lakme sun expert spf 50
+Step 1 - To get the product code for "lakme sun expert spf 50
+
 ```sql
 select *
 from dim_product
 where product="lakme sun expert spf50+"
 ```
 
-To get the monthly sales for the product lakme sun expert spf50+
+Step 2 - To get the monthly sales for the product lakme sun expert spf50+
+
 ```sql
 SELECT 
     s.date, SUM(s.sold_quantity) AS total_sales
@@ -146,7 +148,7 @@ GROUP BY s.date
 ORDER BY s.date;
 ```
 
-### Q6. Find are the products having higher than average sales for fiscal_year 2021 ?
+### Q6. Find are the products having higher than average sales for fiscal year 2021 ?
 
 ```sql
 SELECT p.product, SUM(s.sold_quantity) AS total_quantity_sold
@@ -221,7 +223,9 @@ select *,
 select * from cte2 where drank<=3;
 ```
 
-### Q10. Create a report of top 5 products by net sales for fiscal_year 2021 with the help of views
+### Q10. Create a report of top 5 products by net sales for fiscal year 2021 with the help of views
+
+Step 1 - Create a view named sales_pre using query mentioned below 
 
 ```sql
 select s.date,
@@ -246,7 +250,7 @@ join fact_pre_invoice_deductions pre
 on s.customer_code = pre.customer_code and s.fiscal_year = pre.fiscal_year
 limit 1500000;
 ```
-Create a view named sales_pre through above query for further analysis
+Step 2 - Create a view named netinvsales2 using  query mentioned below
 
 ```sql
 SELECT 
@@ -271,7 +275,7 @@ FROM
         AND s.date = po.date;
   ```
 
-Create a view with above query named netinvsales2 using the query mentioned above
+Step 3 - Create a view named net_sales2 using  query mentioned below 
 
 ```sql
 SELECT 
@@ -281,7 +285,7 @@ FROM
     netinvsales2;
 ```
 
-Create a view named net_sales2 using  query mentioned above.
+Step 4 - Get top 5 products by net_sales for fiscal year 2021
 
 ```sql
 SELECT 
