@@ -1,2 +1,2 @@
 # Unilever data analysis using SQL
-![Unilever logo]()
+![Unilever logo](https://github.com/shristii589/unilvr_sql_project/blob/main/unilever%20(1).png)
