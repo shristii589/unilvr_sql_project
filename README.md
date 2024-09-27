@@ -32,5 +32,22 @@ The Unilever database is composed of the following tables:
  
 6. fact_post_invoice_deductions: This table records post-invoice discount percentages, providing insights into the effectiveness of discounts and their impact on sales.
 
+## 
+
+### Q1. Find the top performing customer in terms of quantity sold in fiscal year 2021.
+
+...sql
+SELECT 
+    c.customer, SUM(s.sold_quantity) AS total_qty_sold
+FROM
+    fact_sales s
+        JOIN
+    dim_customer c ON s.customer_code = c.customer_code
+WHERE
+    s.fiscal_year = 2021
+GROUP BY c.customer
+ORDER BY total_qty_sold DESC
+LIMIT 1;
+...
 
 
