@@ -72,6 +72,7 @@ DETERMINISTIC
  RETURN qtr;
  END;
 ```
+**Objective-** To categorize financial data according to company's specific fiscal calender so that the analysis can align with the fiscal year, enabling better financial reporting, performance evaluation and strategic planning based on quarterly results.
 
 ### Q3.  Generate gross sales report for globalmart ltd , India for fiscal year 2021.
 
@@ -101,6 +102,7 @@ WHERE
         AND s.customer_code IN (70002017 , 90002011)
 LIMIT 15000000;
 ```
+**Objective-** Provide insight into the gross sales performance so that company can make decisions about discount strategies based on the performance.
 
 ### Q4. Create a stored procedure to get customized report of gross sales for the given customer, market and fiscal year.
 
@@ -125,6 +127,7 @@ and s.fiscal_year = in_fiscal_year
   limit 15000000;
 END;
 ```
+**Objective-** To evaluate gross sales performance of a specific customer in a specific market for a specific fiscal year to make informed decisions like discount strategies, customer engagement to enhance future performance.
 
 ### Q5. Analyze monthly sales trends for product lakme sun expert spf50+.
 Step 1 - To get the product code for "lakme sun expert spf 50
@@ -149,6 +152,7 @@ WHERE
 GROUP BY s.date
 ORDER BY s.date;
 ```
+**Objective-** For tracking sales performance on a monthly basis, which helps to identify patterns and seasonal variations in demand which will further help in making informed decisions regarding inventory management and sales forecasting.
 
 ### Q6. Find are the products having higher than average sales for fiscal year 2021 ?
 
@@ -168,6 +172,7 @@ HAVING SUM(s.sold_quantity) > (
     ) AS avg_sales
 );
 ```
+**Objective-** To identify products with sales performance exceeding the average for fiscal year 2021 so that company can gain insights into successful products that resonate with customers.
 
 ## Q7. Create a report to show gross sales performance over region for quarter 2 of fiscal year 2020.
 
@@ -187,6 +192,7 @@ WHERE
         AND s.fiscal_year = 2020
 GROUP BY c.region;
 ```
+**Objective-** To highlight regional performance differences and assess the effectiveness of regional sales strategies which will help in making further important decisions.
 
 ### Q8. Create a report showcasing the percent share of customer over gross sales for fiscal year 2020.
 
@@ -208,6 +214,8 @@ from cte1
 order by gross_sales_mln desc;
 ```
 
+**Objective-** To identify key customers and assess their gross sales performance, by understanding distribution of gross sales among customers, company can recognize high value customers and tailoring marketing strategies to enhance customer engagement.
+
 ### Q9. Create a report of top 3 products in each division by their sales quantity for fiscal year 2021.
 
 ```sql
@@ -224,6 +232,7 @@ select *,
  as drank from cte1 )
 select * from cte2 where drank<=3;
 ```
+**Objective-** To provide insights into product performance across different divisions, enabling company to identify which products are driving sales in each category and supporting strategic decision-making for product development and pricing strategies.
 
 ### Q10. Create a report of top 5 products by net sales for fiscal year 2021 with the help of views
 
@@ -300,7 +309,7 @@ GROUP BY product
 ORDER BY _netsales DESC
 LIMIT 5;
 ```
-
+**Objective-** To identify products that have generated the highest net sales, by identifying top net sales generating products so that company can focus on enhancing marketing efforts and developing targeted sales strategies to maximize profitability.
 
 ## Conclusion
 
