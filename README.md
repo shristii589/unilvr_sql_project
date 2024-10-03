@@ -16,9 +16,6 @@ The primary objectives of this project are:
 ## Disclaimer
 This project uses a "fictional dataset" based on the structure of Unilever. The data is completely synthetic and used solely for educational purposes. None of the information represents real company data or business operations.
 
-## Dataset
-Dataset link 
-
 ## Data structure
 The Unilever database is composed of the following tables:
 1. dim_customer: This dimension table contains detailed information about customers, including unique identifiers, names, markets, regions, and subzones.
